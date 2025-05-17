@@ -1,6 +1,7 @@
 import json
 import pytest
 
+
 @pytest.fixture
 def test_json(tmp_path):
     data = [
