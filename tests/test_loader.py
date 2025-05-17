@@ -1,20 +1,19 @@
 import json
+
 import pytest
+
 from src.loader import loader_data
 
 
 def test_loader_with_valid_data(tmp_path):
     """Тест загрузки корректных данных"""
-    test_data = [{
-        "name": "Телефоны",
-        "description": "Смартфоны",
-        "products": [{
-            "name": "iPhone 13",
-            "description": "128GB",
-            "price": 80000,
-            "quantity": 10
-        }]
-    }]
+    test_data = [
+        {
+            "name": "Телефоны",
+            "description": "Смартфоны",
+            "products": [{"name": "iPhone 13", "description": "128GB", "price": 80000, "quantity": 10}],
+        }
+    ]
 
     file = tmp_path / "test.json"
     file.write_text(json.dumps(test_data))

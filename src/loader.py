@@ -1,5 +1,6 @@
 import json
-from src.commerce import Product, Category
+
+from src.commerce import Category, Product
 
 
 def loader_data(filename):
