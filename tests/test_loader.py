@@ -3,7 +3,6 @@ import pytest
 from src.commerce import Category
 from src.loader import loader_data
 
-
 def test_load_data_success(test_json):
     """Проверка успешной загрузки данных"""
     categories = loader_data(test_json)

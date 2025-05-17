@@ -1,6 +1,5 @@
 from src.commerce import Product, Category
 
-
 def test_product_initialization():
     product = Product("Телефон", "Смартфон", 50000, 10)
     assert product.name == "Телефон"
