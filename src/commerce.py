@@ -1,10 +1,13 @@
 from src.base_class import LoggingMixin, BaseProduct, BaseContainer
+from src.class_error import ZeroQuantityError
 
 
-class Product(LoggingMixin ,BaseProduct):
+class Product(LoggingMixin, BaseProduct):
     total_products = 0
 
     def __init__(self, name, description, price, quantity):
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__(name, description, price, quantity)
         Product.total_products += 1
 
@@ -45,6 +48,7 @@ class Product(LoggingMixin ,BaseProduct):
             raise TypeError("Нельзя складывать продукты разных типов")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
+
 class Category(BaseContainer):
     category_count = 0
     product_count = 0
@@ -55,13 +59,20 @@ class Category(BaseContainer):
         self.__products = []
         if products:
             for product in products:
-                self.add_product(product)
+                try:
+                    self.add_product(product)
+                except ZeroQuantityError as e:
+                    print(e)
+                finally:
+                    print("Обработка добавления товара завершена")
         Category.category_count += 1
 
     def add_product(self, product):
         """Добавляет товар в категорию"""
         if not isinstance(product, Product):
             raise TypeError("Можно добавлять только объекты класса Product")
+        if product.quantity <= 0:
+            raise ZeroQuantityError(f"Товар {product.name} имеет недопустимое количество: {product.quantity}")
         self.__products.append(product)
         Category.product_count += 1
 
@@ -76,3 +87,12 @@ class Category(BaseContainer):
     def __str__(self):
         total_quantity = sum(product.quantity for product in self.__products)
         return f"{self.name}, количество продуктов: {total_quantity} шт."
+
+    def middle_price(self):
+        """Возвращает среднюю цену товаров в категории"""
+        try:
+            total = sum(product.price for product in self.__products)
+            return total / len(self.__products)
+        except ZeroDivisionError:
+            print("В категории нет товаров")
+            return 0

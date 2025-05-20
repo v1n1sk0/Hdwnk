@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 
 
-class BaseProduct(ABC): #pragma: no cover
+class BaseProduct(ABC):  # pragma: no cover
     """Абстрактный базовый класс для продуктов"""
 
     @abstractmethod
@@ -27,7 +27,7 @@ class BaseProduct(ABC): #pragma: no cover
         pass
 
 
-class BaseContainer(ABC): #pragma: no cover
+class BaseContainer(ABC):  # pragma: no cover
     """Абстрактный класс для контейнеров (Категория и Заказ)"""
 
     @abstractmethod
@@ -50,5 +50,5 @@ class LoggingMixin:
         super().__init__(*args)
 
     def __repr__(self):
-        attrs = ', '.join(f"{k}={v}" for k, v in self.__dict__.items())
+        attrs = ", ".join(f"{k}={v}" for k, v in self.__dict__.items())
         return f"{self.__class__.__name__}({attrs})"
