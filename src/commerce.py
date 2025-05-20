@@ -1,11 +1,11 @@
-class Product:
+from src.base_class import LoggingMixin, BaseProduct, BaseContainer
+
+
+class Product(LoggingMixin ,BaseProduct):
     total_products = 0
 
     def __init__(self, name, description, price, quantity):
-        self.name = name
-        self.description = description
-        self.__price = price
-        self.quantity = quantity
+        super().__init__(name, description, price, quantity)
         Product.total_products += 1
 
     @classmethod
@@ -21,7 +21,7 @@ class Product:
 
     @property
     def price(self):
-        return self.__price
+        return self._price
 
     @price.setter
     def price(self, new_price):
@@ -29,13 +29,13 @@ class Product:
             print("Цена не должна быть нулевая или отрицательная")
             return
 
-        if new_price < self.__price:
-            confirm = input(f"Цена снижается с {self.__price} до {new_price}. Подтвердите (y/n): ")
+        if new_price < self._price:
+            confirm = input(f"Цена снижается с {self._price} до {new_price}. Подтвердите (y/n): ")
             if confirm.lower() != "y":
                 print("Изменение цены отменено")
                 return
 
-        self.__price = new_price
+        self._price = new_price
 
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
@@ -45,8 +45,7 @@ class Product:
             raise TypeError("Нельзя складывать продукты разных типов")
         return (self.price * self.quantity) + (other.price * other.quantity)
 
-
-class Category:
+class Category(BaseContainer):
     category_count = 0
     product_count = 0
 
