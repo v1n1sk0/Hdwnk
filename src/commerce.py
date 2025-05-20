@@ -30,7 +30,7 @@ class Product:
             return
 
         if new_price < self.__price:
-            confirm = input(f"Цена снижается с {self._price} до {new_price}. Подтвердите (y/n): ")
+            confirm = input(f"Цена снижается с {self.__price} до {new_price}. Подтвердите (y/n): ")
             if confirm.lower() != "y":
                 print("Изменение цены отменено")
                 return
